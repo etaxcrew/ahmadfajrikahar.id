@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Base layer — situs ini light-mode only (tema kertas akta).
+ * Tidak ada dark mode: nuansa formal navy/off-white sudah jadi identitas visualnya.
+ */
+@layer base {
+  :root {
+    --color-bg: theme("colors.cream.50");
+    --color-fg: theme("colors.navy.900");
+    --color-accent: theme("colors.gold.600");
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-cream-50 font-sans text-navy-900 antialiased;
+    /* Cegah horizontal scroll di breakpoint sempit (P0: 360px) */
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif text-navy-950;
+    text-wrap: balance;
+  }
+
+  /* Offset agar anchor navigation tidak tertutup header sticky */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  /* Fokus keyboard yang selalu terlihat (WCAG 2.4.7) */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold-600 ring-offset-2 ring-offset-cream-50;
+  }
+}
+
+@layer components {
+  .container-content {
+    @apply mx-auto w-full max-w-content px-5 sm:px-6 lg:px-8;
+  }
+
+  /* Label kecil di atas heading section — meniru penomoran pasal pada akta */
+  .eyebrow {
+    @apply font-sans text-xs font-semibold uppercase tracking-[0.18em] text-gold-700;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Dipakai untuk skip-link dan label screen-reader */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
