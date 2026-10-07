@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Favicon sementara dari motif seal AFK. TODO: ganti dengan aset logo final bila tersedia. -->
+  <circle cx="32" cy="32" r="32" fill="#122338"/>
+  <circle cx="32" cy="32" r="27" fill="none" stroke="#D4AF6A" stroke-width="2.5"/>
+  <circle cx="32" cy="32" r="22" fill="none" stroke="#D4AF6A" stroke-width="1" stroke-dasharray="1.5 3" opacity="0.8"/>
+  <text x="32" y="38.5" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="700" fill="#E1C68C" letter-spacing="0.5">AFK</text>
+</svg>

@@ -26,6 +26,7 @@
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
@@ -64,6 +65,51 @@
   /* Label kecil di atas heading section — meniru penomoran pasal pada akta */
   .eyebrow {
     @apply font-sans text-xs font-semibold uppercase tracking-[0.18em] text-gold-700;
+  }
+}
+
+/*
+ * Reveal saat scroll — CSS scroll-driven, tanpa JS.
+ * Dipakai hemat (tahapan Alur Layanan, kartu Testimoni), bukan di setiap section.
+ * Default-nya statis: browser tanpa dukungan `animation-timeline` dan pengguna
+ * prefers-reduced-motion melihat konten langsung tanpa gerak.
+ */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+/* Jawaban FAQ muncul halus saat <details> dibuka */
+@keyframes faq-open {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  details[open] > .faq-answer {
+    animation: faq-open 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 

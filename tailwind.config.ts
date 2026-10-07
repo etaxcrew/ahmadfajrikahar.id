@@ -71,6 +71,39 @@ const config: Config = {
         card: "0 1px 2px rgba(10, 22, 40, 0.04), 0 8px 24px -12px rgba(10, 22, 40, 0.18)",
         "card-hover": "0 2px 4px rgba(10, 22, 40, 0.06), 0 16px 32px -12px rgba(10, 22, 40, 0.22)",
       },
+      // Animasi Hero — hanya transform/opacity (murah untuk GPU, tidak memicu layout).
+      // Otomatis dinonaktifkan untuk prefers-reduced-motion di app/globals.css.
+      keyframes: {
+        "hero-rise": {
+          from: { opacity: "0", transform: "translateY(14px)" },
+          to: { opacity: "1", transform: "none" },
+        },
+        "hero-card": {
+          from: { opacity: "0", transform: "translateY(20px) scale(0.985)" },
+          to: { opacity: "1", transform: "none" },
+        },
+        "hero-rule": {
+          from: { transform: "scaleX(0)" },
+          to: { transform: "scaleX(1)" },
+        },
+        "hero-fade": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "hero-sheen": {
+          from: { transform: "translateX(-100%) skewX(-18deg)" },
+          to: { transform: "translateX(320%) skewX(-18deg)" },
+        },
+      },
+      animation: {
+        "hero-rise": "hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "hero-card": "hero-card 1s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "hero-rule": "hero-rule 0.9s cubic-bezier(0.65, 0, 0.35, 1) both",
+        "hero-fade": "hero-fade 1.4s ease-out both",
+        "hero-sheen": "hero-sheen 1.6s cubic-bezier(0.65, 0, 0.35, 1) 1.1s both",
+        "spin-slower": "spin 90s linear infinite",
+        "spin-slowest": "spin 240s linear infinite",
+      },
       backgroundImage: {
         // Garis tipis ala kop surat/akta — dipakai sebagai pemisah section
         "rule-gold": "linear-gradient(90deg, transparent, #D4AF6A 20%, #D4AF6A 80%, transparent)",

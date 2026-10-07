@@ -32,10 +32,10 @@ Draft ini jadi acuan isi `content/site-content.ts`. Semua yang ditandai `[PLACEH
 ## Info Kantor
 - **Alamat**: Kayubulan, Kec. Limboto, Kabupaten Gorontalo, Gorontalo 96214
 - **Telepon/WhatsApp**: 0821-9593-3733
-- **Jam Operasional**: `[PLACEHOLDER — belum dikonfirmasi]` Senin–Jumat, 08.00–16.00 WITA
-- **Email**: `[PLACEHOLDER]` info@notarisafk.id
-- **Instagram**: `[PLACEHOLDER]` @notaris.afk
-- **Domain**: ahmadfajrikahar.web.id
+- **Jam Operasional**: Senin–Jumat, 08.00–17.00 WITA; Sabtu, 09.00–15.00 WITA
+- **Email**: info@notarisafk.id
+- **Instagram**: @notaris.afk
+- **Domain**: ahmadfajrikahar.id
 
 ## Testimoni (3 slot placeholder)
 > `[TESTIMONI PLACEHOLDER 1 — ganti sebelum publish]`

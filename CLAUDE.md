@@ -6,9 +6,9 @@ Landing page satu halaman untuk Kantor Notaris & PPAT Ahmad Fajri Kahar, S.H., M
 ## Tech Stack & Keputusan Arsitektur
 - **Framework**: Next.js 14+ (App Router)
 - **Styling**: Tailwind CSS
-- **Deployment**: VPS GWH sendiri (bukan Vercel/Netlify) — build dengan `output: 'standalone'`, jalankan via PM2, reverse proxy Nginx, HTTPS via Let's Encrypt/certbot
-- **Domain**: `ahmadfajrikahar.web.id`
-- **Contact form**: API route (`app/api/contact/route.ts`) → kirim email langsung via Nodemailer/Resend ke email kantor. Bukan Formspree/Google Sheet.
+- **Deployment**: Vercel (keputusan pemilik, 8 Okt 2026 — menggantikan rencana VPS GWH), dibangun otomatis dari repo GitHub `etaxcrew/ahmadfajrikahar.id`. Region fungsi `sin1` (Singapura) via `vercel.json`. Sebelum domain aktif, situs tayang di subdomain `*.vercel.app`; URL dasar metadata diatur otomatis oleh `lib/site-url.ts`. Situs kantor = penggunaan komersial → paket Hobby tidak sesuai ketentuan Vercel; gunakan Pro. Langkah deploy ada di `README.md`.
+- **Domain**: `ahmadfajrikahar.id`
+- **Contact form**: API route (`app/api/contact/route.ts`) → kirim email langsung via Nodemailer (SMTP) atau Resend ke email kantor, dipilih lewat env `EMAIL_PROVIDER`. Bukan Formspree/Google Sheet. Rencana awal: SMTP Gmail + App Password (kredensial belum dibuat per 8 Okt 2026). Semua kredensial dari env var — daftar di `.env.example`.
 - **Konten**: terpusat di `content/site-content.ts` (teks, testimoni, FAQ, kontak) — bukan hardcode di komponen, bukan headless CMS. Lihat `content-notaris-afk.md` untuk draft copy lengkap.
 
 ## Design System
@@ -59,16 +59,18 @@ public/
 - Bahasa harus tetap formal-informatif, hindari gaya "iklan" yang agresif atau superlatif berlebihan
 
 ## Placeholder Aktif — Wajib Ditandai Jelas di Kode (perlu diganti sebelum go-live)
-- Email kantor: `info@notarisafk.id` (belum final — cari komentar `// TODO: email final`)
-- Instagram: `@notaris.afk` (belum final)
-- Jam operasional: belum dikonfirmasi pemilik kantor — gunakan `Senin–Jumat, 08.00–16.00 WITA` sebagai placeholder, tandai jelas
+Penanda placeholder cukup di kode (komentar `TODO`, flag `isPlaceholder`, `PLACEHOLDER_CHECKLIST` di `content/site-content.ts`) — **tidak** ditampilkan sebagai label/badge di halaman (keputusan pemilik, 7 Okt 2026). `next build` mencetak peringatan selama testimoni placeholder masih ada.
 - 3 testimoni: teks generik placeholder, tandai `[TESTIMONI PLACEHOLDER — ganti sebelum publish]`
 - Foto kantor/tim: belum ada. Gunakan elemen desain (seal, tipografi akta) sebagai pengganti visual, **tapi** komponen harus dibuat siap-ganti (image slot dengan ukuran/aspect ratio jelas) agar mudah diganti ke foto asli nanti tanpa refactor besar
 
 ## Data Final (sudah dikonfirmasi, gunakan langsung — jangan diubah)
 - Alamat: Kayubulan, Kec. Limboto, Kabupaten Gorontalo, Gorontalo 96214
 - Telepon/WA: 0821-9593-3733
-- Domain: ahmadfajrikahar.web.id
+- Jam operasional: Senin–Jumat, 08.00–17.00 WITA; Sabtu, 09.00–15.00 WITA
+- Email kantor: info@notarisafk.id
+- Instagram: @notaris.afk
+- Google Maps: listing resmi kantor https://maps.app.goo.gl/9rPwG7F5GifB4fRi7 (pin 0.6249177, 122.9803728)
+- Domain: ahmadfajrikahar.id
 
 ## Alur Kerja
 Ikuti pola "report-first, confirm-before-execute": bangun per section, laporkan progres di tiap stop point, jangan lanjut ke section berikutnya tanpa konfirmasi bila ada perubahan asumsi konten atau struktur dari yang tertulis di sini.

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Public_Sans } from "next/font/google";
 import "./globals.css";
+import { getSiteUrl } from "@/lib/site-url";
 
 /**
  * Tipografi
@@ -24,7 +25,8 @@ const publicSans = Public_Sans({
 // TODO (Tahap 9): metadata final — Open Graph, JSON-LD LegalService/LocalBusiness,
 // canonical, robots, dan OG image. Di bawah ini baru placeholder minimal agar build jalan.
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ahmadfajrikahar.web.id"),
+  // Otomatis: *.vercel.app sebelum domain aktif, ahmadfajrikahar.id sesudahnya (lib/site-url.ts)
+  metadataBase: new URL(getSiteUrl()),
   title: "Notaris & PPAT Ahmad Fajri Kahar, S.H., M.Kn. — Limboto, Kabupaten Gorontalo",
   description:
     "Kantor Notaris & PPAT Ahmad Fajri Kahar, S.H., M.Kn. melayani jasa kenotariatan dan pertanahan di Kabupaten Gorontalo dan sekitarnya.",

@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Situs Kantor Notaris & PPAT Ahmad Fajri Kahar, S.H., M.Kn.
 
-## Getting Started
+Landing page satu halaman — Next.js 14 (App Router) + Tailwind CSS, di-deploy ke Vercel.
+Domain produksi: **ahmadfajrikahar.id** (sementara memakai subdomain `*.vercel.app`).
 
-First, run the development server:
+- Semua teks situs ada di `content/site-content.ts` — ubah konten di sana, bukan di komponen.
+- Aturan proyek dan batasan kode etik notaris: `CLAUDE.md`.
+- Data yang belum final: `PLACEHOLDER_CHECKLIST` di `content/site-content.ts`.
+
+## Menjalankan di komputer
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # isi kredensial email (lihat di bawah)
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sebelum push, pastikan build produksi lolos (matikan `npm run dev` dulu — keduanya
+memakai folder `.next` yang sama):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Email form kontak (Gmail)
 
-## Learn More
+Form kontak mengirim email lewat SMTP Gmail. Gmail tidak menerima password akun biasa;
+yang dipakai adalah **App Password**:
 
-To learn more about Next.js, take a look at the following resources:
+1. Masuk ke akun Google yang akan menjadi pengirim → **Kelola Akun Google → Keamanan**.
+2. Aktifkan **Verifikasi 2 Langkah** (wajib sebelum App Password bisa dibuat).
+3. Buka <https://myaccount.google.com/apppasswords>, buat App Password baru
+   (mis. nama "Website Notaris"), salin 16 karakter yang muncul (spasi boleh dibuang).
+4. Isi variabel berikut — di `.env.local` untuk uji lokal, atau di Vercel (langkah 4 di bawah):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Variabel | Nilai |
+|---|---|
+| `EMAIL_PROVIDER` | `smtp` |
+| `SMTP_HOST` | `smtp.gmail.com` |
+| `SMTP_PORT` | `465` |
+| `SMTP_USER` | alamat Gmail pengirim |
+| `SMTP_PASSWORD` | App Password 16 karakter |
+| `CONTACT_TO_EMAIL` | `info@notarisafk.id` (tujuan pesan) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`CONTACT_FROM_EMAIL` biarkan kosong — Gmail selalu mengirim atas nama `SMTP_USER`.
+Jika pengunjung mengisi email, tombol "Balas" di kotak masuk langsung mengarah ke pengunjung.
 
-## Deploy on Vercel
+**Jangan pernah** menaruh App Password di kode atau commit `.env.local`. Bila bocor,
+cabut di halaman App Password lalu buat yang baru.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Tanpa kredensial, situs tetap berjalan; form akan menampilkan pesan gagal dan
+mengarahkan pengunjung ke WhatsApp.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy ke Vercel
+
+1. Commit dan push ke GitHub (`etaxcrew/ahmadfajrikahar.id`).
+2. Di <https://vercel.com/new>, **Import** repo tersebut. Framework terdeteksi otomatis
+   sebagai Next.js; pengaturan build tidak perlu diubah.
+3. Nama proyek menentukan subdomain sementara, mis. `ahmadfajrikahar` →
+   `https://ahmadfajrikahar.vercel.app` (bila nama sudah dipakai orang lain, Vercel
+   menambahkan akhiran).
+4. **Settings → Environment Variables**: isi variabel email di atas untuk lingkungan
+   *Production* (dan *Preview* bila ingin form aktif di deploy preview), lalu
+   **Deployments → Redeploy** agar terbaca.
+5. Uji: kirim form kontak dari situs, pastikan email masuk ke `CONTACT_TO_EMAIL`.
+   Log kegagalan kirim terlihat di **Logs** proyek Vercel.
+
+Catatan:
+- Fungsi API berjalan di region Singapura (`sin1`, diatur di `vercel.json`).
+- Ketentuan Vercel: paket **Hobby** hanya untuk penggunaan non-komersial. Situs kantor
+  termasuk komersial, jadi gunakan paket **Pro**.
+- URL untuk metadata/Open Graph diatur otomatis oleh `lib/site-url.ts` — tidak perlu
+  diubah saat domain dipasang.
+
+## Memasang domain ahmadfajrikahar.id (setelah domain aktif)
+
+1. Vercel → proyek → **Settings → Domains → Add**: `ahmadfajrikahar.id` dan
+   `www.ahmadfajrikahar.id` (arahkan `www` ke domain utama).
+2. Ikuti instruksi DNS yang ditampilkan Vercel di panel pengelola domain (registrar):
+   biasanya record **A** untuk domain utama dan **CNAME** untuk `www`, dengan nilai
+   persis seperti yang tertera di Vercel.
+3. Tunggu status **Valid Configuration**; sertifikat HTTPS dibuat otomatis.
+4. Atur subdomain `*.vercel.app` agar mengalihkan ke `ahmadfajrikahar.id` (menu edit pada
+   domain tersebut di halaman Domains), supaya mesin pencari hanya mengindeks satu alamat.
+5. Redeploy sekali agar metadata memakai domain baru.
