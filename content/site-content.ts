@@ -86,6 +86,33 @@ export const site = {
   url: "https://ahmadfajrikahar.id",
 } as const;
 
+/**
+ * SEO — metadata halaman, Open Graph, dan data terstruktur (JSON-LD).
+ * Kode etik: tidak ada harga/priceRange, rating, atau klaim superlatif di sini.
+ */
+export const seo = {
+  /** <= 60 karakter agar tidak terpotong di hasil pencarian */
+  title: "Notaris & PPAT Ahmad Fajri Kahar — Limboto, Gorontalo",
+  /** 120–160 karakter; memuat kata kunci lokal secara wajar */
+  description:
+    "Kantor Notaris & PPAT Ahmad Fajri Kahar, S.H., M.Kn. di Kayubulan, Limboto, Kabupaten Gorontalo. Melayani akta notaris dan akta tanah. Konsultasi via WhatsApp.",
+  /** Teks alternatif gambar Open Graph */
+  ogImageAlt:
+    "Kantor Notaris & PPAT Ahmad Fajri Kahar, S.H., M.Kn. — Kayubulan, Limboto, Kabupaten Gorontalo",
+  /** Bahasa & wilayah untuk Open Graph */
+  locale: "id_ID",
+  /** Alamat terstruktur untuk JSON-LD (schema.org PostalAddress) — sama dengan data final alamat */
+  postalAddress: {
+    streetAddress: "Kayubulan",
+    addressLocality: "Limboto",
+    addressRegion: "Gorontalo",
+    postalCode: "96214",
+    addressCountry: "ID",
+  },
+  /** Wilayah layanan — sejalan dengan jawaban FAQ "Wilayah layanan" */
+  areaServed: ["Kabupaten Gorontalo", "Kota Gorontalo", "Kabupaten Gorontalo Utara", "Kabupaten Boalemo"],
+} as const;
+
 export const contact = {
   /** DATA FINAL — sudah dikonfirmasi, jangan diubah */
   phoneDisplay: "0821-9593-3733",

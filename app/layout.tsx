@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Public_Sans } from "next/font/google";
 import "./globals.css";
 import { getSiteUrl } from "@/lib/site-url";
+import { seo, site } from "@/content/site-content";
 
 /**
  * Tipografi
@@ -22,14 +23,38 @@ const publicSans = Public_Sans({
   variable: "--font-public-sans",
 });
 
-// TODO (Tahap 9): metadata final — Open Graph, JSON-LD LegalService/LocalBusiness,
-// canonical, robots, dan OG image. Di bawah ini baru placeholder minimal agar build jalan.
+/**
+ * Metadata SEO — teks dari `seo` di content/site-content.ts.
+ * Gambar Open Graph dibuat otomatis oleh app/opengraph-image.tsx (Next menautkannya sendiri),
+ * JSON-LD dirender di app/page.tsx, robots.txt & sitemap.xml di app/robots.ts & app/sitemap.ts.
+ */
 export const metadata: Metadata = {
   // Otomatis: *.vercel.app sebelum domain aktif, ahmadfajrikahar.id sesudahnya (lib/site-url.ts)
   metadataBase: new URL(getSiteUrl()),
-  title: "Notaris & PPAT Ahmad Fajri Kahar, S.H., M.Kn. — Limboto, Kabupaten Gorontalo",
-  description:
-    "Kantor Notaris & PPAT Ahmad Fajri Kahar, S.H., M.Kn. melayani jasa kenotariatan dan pertanahan di Kabupaten Gorontalo dan sekitarnya.",
+  title: seo.title,
+  description: seo.description,
+  applicationName: site.officeName,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: seo.locale,
+    url: "/",
+    siteName: site.officeName,
+    title: seo.title,
+    description: seo.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: seo.title,
+    description: seo.description,
+  },
+  robots: { index: true, follow: true },
+  // Nomor telepon tetap tautan eksplisit (tel:/wa.me), bukan deteksi otomatis browser
+  formatDetection: { telephone: false },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#FDFBF7",
 };
 
 export default function RootLayout({
